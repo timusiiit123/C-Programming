@@ -260,7 +260,6 @@ void deleteAtBegining(){
         t=NULL;
     }
     
-    displayLinkedList();
 }
 
 
@@ -278,8 +277,6 @@ void deleteAtEnd(){
         t=NULL;
         r->next=NULL;
     }
-    
-    displayLinkedList();
     
 }
 
@@ -327,7 +324,7 @@ void deleteSpecificNode(){
 /*Change the data of node*/
 void changeSpecificNodeData(){
     struct node *t;
-    int se, getSize, counter=1;
+    int se, c, getSize, counter=1;
   
     printf("Enter Node no = ");
     scanf("%d",&se);
