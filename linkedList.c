@@ -24,8 +24,9 @@ void deleteAtEnd();
 void deleteSpecificNode();
 
 void changeSpecificNodeData();
-
+void reverseLinkedList();
 void displayLinkedList();
+
 
 int sizeOfLinkedList();
 
@@ -45,6 +46,7 @@ int main(){
     printf("7 : Delete Node No.\n");
     
     printf("8 : Change Data Of A Specific Node\n");
+    printf("9 : Reverse the Linked List\n");
     
     printf("Your Choice: ");
 
@@ -75,6 +77,9 @@ int main(){
             break;
             
       case 8 :   changeSpecificNodeData();
+            break;
+    
+      case 9 :   reverseLinkedList();
             break;
             
       default:   printf("Try again\n\n");
@@ -354,6 +359,25 @@ void changeSpecificNodeData(){
     }
     
 }
+
+
+void reverseLinkedList(){
+    
+    struct node *prev, *current, *next;
+    prev = NULL;
+    current = start;
+    
+    while (current != NULL)
+    {
+        next  = current->next;  
+        current->next = prev;   
+        prev = current;
+        current = next;
+    }
+    start = prev;
+    
+}
+
 
 /*Display of data of nodes*/
 void displayLinkedList()
