@@ -125,8 +125,6 @@ int sizeOfLinkedList(){
   
 }
 
-
-
 struct node *create(){ 
 
   struct node *p;
@@ -211,8 +209,6 @@ void insertAfterSpecifyNode(){
   
 }
 
-
-
 void insertBeforeSpecifyNode(){
   
   struct node *t, *q, *r;
@@ -253,8 +249,6 @@ void insertBeforeSpecifyNode(){
 }
 
 
-/*Delete from begning*/
-
 void deleteAtBegining(){ 
     struct node *t;
     
@@ -268,25 +262,30 @@ void deleteAtBegining(){
 }
 
 
-/*Delete Node at end*/
 void deleteAtEnd(){ 
     struct node *t, *r;
     
-    if(start!=NULL){ 
-        t=start;
-        while(t->next!=NULL){
-            r=t;
-            t=t->next;
+    if(start!=NULL){
+        if(start->next==NULL){
+            free(start);
+            start=NULL;
         }
-        free(t);
-        t=NULL;
-        r->next=NULL;
+        else{
+            t=start;
+            while(t->next!=NULL){
+                r=t;
+                t=t->next;
+            }
+            free(t);
+            t=NULL;
+            r->next=NULL; 
+        }
+        
     }
     
 }
 
 
-/*Delete with perticular data*/
 void deleteSpecificNode(){
     struct node *t, *r;
     int se, getSize, counter=1;
@@ -325,8 +324,6 @@ void deleteSpecificNode(){
 }
 
 
-
-/*Change the data of node*/
 void changeSpecificNodeData(){
     struct node *t;
     int se, c, getSize, counter=1;
@@ -379,7 +376,6 @@ void reverseLinkedList(){
 }
 
 
-/*Display of data of nodes*/
 void displayLinkedList()
 { struct node *t;
   t=start;
