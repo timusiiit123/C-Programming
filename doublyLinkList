@@ -1,0 +1,420 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *next, *prev;
+}*start;
+
+struct node *create();
+
+void insertAtBegining();
+void insertAtEnd();
+void insertAfterSpecificNode();
+void insertBeforeSpecificNode();
+
+void deleteAtBegining();
+void deleteAtEnd();
+void deleteSpecificNode();
+
+void changeNodeData();
+int  sizeOfDLL();
+void reverseDLL();
+void displayDLL();
+
+void main(){
+    int n,h;
+    
+    do{
+        printf("\n\t\t*****Doubly Linked List*****\n");
+        
+        printf("1 : Insert Node At Begning\n");
+        printf("2 : Insert Node At End\n");
+        printf("3 : Insert Node After A Specific Node\n");
+        printf("4 : Insert Node Before A Specific Node\n");
+        
+        printf("5 : Delete Node At Begining\n");
+        printf("6 : Delete Node At End\n");
+        printf("7 : Delete Specific Node\n");
+        printf("8 : Change Data of A Specific Node\n");
+        
+        printf("9 : Reverse Doubly linked list\n");
+        scanf("%d",&n); 
+        
+        switch(n){
+            
+            case 1 : insertAtBegining();
+                   break;
+            
+            case 2 : insertAtEnd();
+                   break;
+            
+            case 3 : insertAfterSpecificNode();
+                   break;
+            
+            case 4 : insertBeforeSpecificNode();
+                   break;
+            
+            case 5 : deleteAtBegining();
+                   break;
+            
+            case 6 : deleteAtEnd();
+                   break;
+            
+            case 7 : deleteSpecificNode();
+                   break;
+            
+            case 8 : changeNodeData();
+                   break;
+            
+            case 9 : reverseDLL();
+                   break;
+            
+            default: printf("Try AGAIN\n");
+                   exit(1);
+        }
+        
+    displayDLL();
+    
+   printf("1 -> Continue\n");
+   scanf("%d",&h);    
+   if(h!=1){ 
+       printf("\nInvalid value.\nExit from the process");
+       exit(1);
+    }
+   }while(h==1);
+}
+
+
+
+/*Node creation*/
+struct node *create(){
+    struct node *p;
+    int x;
+    
+    p=(struct node*)malloc(sizeof(struct node));
+    
+    printf("Enter the number : ");
+    scanf("%d",&x);   
+  
+    p->data=x;
+    p->prev=NULL;
+    p->next=NULL;
+    return p;
+}
+
+
+int sizeOfDLL(){
+    
+    int size=0;
+    struct node *t;
+    
+    t=start;
+    while(t!=NULL){
+        t=t->next;
+        size++;
+    }
+    
+    return size;
+    
+}
+
+
+void insertAtBegining(){
+    struct node *t, *q;
+  
+    if(start==NULL){
+        t=create();   
+        start=t;
+    }
+    else{
+        t=start;
+        q=create();   
+        q->next=t;
+        t->prev=q;
+        start=q;
+    }
+}
+
+
+
+void insertAtEnd(){
+    struct node *t, *q;  
+  
+    if(start==NULL){
+        t=create(); 
+        start=t;
+    }
+    else{
+        t=start;
+        q=create();   
+        while(t->next!=NULL){
+            t=t->next;
+        } 
+        t->next=q;
+        q->prev=t;
+    }
+}
+
+
+
+void insertAfterSpecificNode(){
+    struct node *t, *q;
+    int se, getSize, counter=1;
+    
+    printf("Enter Specific Node no. = ");
+    scanf("%d",&se);
+    
+    getSize = sizeOfDLL();
+    
+    if(se>0&&(se<=getSize)){
+        
+        t=start;
+        q=create();
+        
+        while(counter<se){
+            t=t->next;
+            counter++;
+        }
+        
+        if(t->next==NULL){
+            t->next=q;
+            q->prev=t;
+        }
+        else{
+            q->next=t->next;
+            t->next->prev=q;
+            t->next=q;
+            q->prev=t;
+        }
+        
+    }
+    else{
+        printf("Please choose valid node number.\n");
+    }
+    
+}
+
+
+
+void insertBeforeSpecificNode(){
+    struct node *t, *q;
+    int se, getSize, counter=1;
+    
+    printf("Enter Specific Node no. = ");
+    scanf("%d",&se);
+    
+    getSize = sizeOfDLL();
+    
+    if(se>0&&(se<=getSize)){
+            
+            if(se>1){
+                
+                t=start;
+                q=create();
+                
+                while(counter<se){
+                    t=t->next;
+                    counter++;
+                }
+                
+                t->prev->next=q;
+                q->prev=t->prev;
+                q->next=t;
+                t->prev=q;
+            }
+            else{
+                insertAtBegining();
+            }
+            
+            
+    }
+    else{
+        printf("Please choose valid node number.\n");
+    }
+    
+}
+
+
+void deleteAtBegining(){
+    struct node *t;
+    
+    if(start==NULL){
+        printf("There is no node to delete at begning.\n");
+    }
+    else{
+        
+        if(start->next==NULL){
+            free(start);
+            start=NULL;
+        }
+        else{
+            t=start;
+            if(t->next!=NULL){
+                start=t->next;
+                start->prev=NULL;
+            }
+            free(t);
+            t=NULL;
+        }
+            
+    }
+}
+
+
+void deleteAtEnd(){
+    struct node *t;
+    
+    if(start==NULL){
+        printf("There is no node to delete at end.\n");
+    }
+    else{
+        
+        if(start->next==NULL){
+            free(start);
+            start=NULL;
+        }
+        else{
+            t=start;
+            if(t->next==NULL){
+                free(t);
+                t=NULL;
+            }
+            else{
+                while(t->next!=NULL){
+                    t=t->next;
+                }
+                t->prev->next=NULL;
+                free(t);
+                t=NULL;
+            }
+        }
+        
+            
+        
+    }
+}
+
+
+void deleteSpecificNode(){
+    struct node *t;
+    int se, getSize, counter=1;
+  
+    printf("Enter Node no. = ");
+    scanf("%d",&se);
+    
+    getSize = sizeOfDLL();
+
+    t=start;
+  
+    if(se>0&&(se<=getSize)){
+      
+            if(se>1){
+                
+                t=start;
+                while(counter<se){ 
+                    t=t->next; 
+                    counter++;
+                }
+                
+                if(t->next==NULL){
+                    t->prev->next = NULL;
+                }
+                else{
+                    t->prev->next=t->next;
+                    t->next->prev=t->prev;
+                }
+                
+                printf("The deleting element is %d.\n",t->data);
+                
+                free(t); 
+                t=NULL;
+                
+                
+                
+            }
+            else{
+                deleteAtBegining();
+            }
+            
+      
+    }
+    else{
+        printf("Please choose valid node number.\n");
+    }
+    
+}
+
+
+
+void changeNodeData(){
+    
+    struct node *t;
+    int se, c, getSize, counter=1;
+  
+    printf("Enter Node no = ");
+    scanf("%d",&se);
+    
+    
+    getSize = sizeOfDLL();
+
+    t=start;
+  
+    if(se>0&&(se<=getSize)){
+      
+            t=start;
+            while(counter<se){
+                t=t->next;
+                counter++;
+            }
+                
+                
+            printf("Enter the no : ");
+            scanf("%d",&c);
+            
+            t->data=c;
+      
+    }
+    else{
+        printf("Please choose valid node number.\n");
+    }
+    
+}
+
+
+
+void reverseDLL(){
+    struct node *t, *current;
+    
+    t=NULL;
+    current = start;
+    
+    while (current !=  NULL){
+        t = current->prev;
+        current->prev = current->next;
+        current->next = t;              
+        current = current->prev;
+    }      
+    
+    if(t != NULL )
+        start = t->prev;
+        
+}
+
+
+void displayDLL(){
+    struct node *t;
+    t=start;
+    
+    if(t==NULL){
+        printf("Doubly Linked List is empty.\n");
+    }
+    else{
+        
+        while(t!=NULL){
+            printf("%d\t",t->data);
+            t=t->next;
+        }
+        printf("\n");
+    }
+}
