@@ -1,0 +1,111 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{ int data;
+  struct node *next;
+}*top;
+
+int x;
+
+struct node *create();
+
+void push();
+void pop();
+void dis();
+
+void main(){
+    int n,h;
+    do{
+        printf("\n");
+        printf("---Linked Stack---\n1: Push\n2: Pop\nEnter choice: ");
+        scanf("%d",&n); 
+        
+        switch(n){
+            case 1 :    push();
+                        break;
+            
+            case 2 :    pop();
+                        break;
+            
+            default:    printf("Try Again\n");
+        }
+        
+        dis();
+        
+        printf("\n1: Continue\n");
+        scanf("%d",&h);
+        
+        if(h==1){
+            continue ;
+        }
+        else{ 
+            printf("\n Invalid Option\n");
+            exit(1);
+        }
+    
+    }while(h==1);
+    
+}
+
+
+struct node *create(){
+    
+    struct node *p;
+    p=(struct node*)malloc(sizeof(struct node));
+    printf("Enter the number : ");
+    scanf("%d",&x); 
+    p->data=x;
+    p->next=NULL;
+    
+    return p;
+}
+
+
+void push(){
+    
+    struct node *t;
+    t=create();
+    t->next=top;
+    top=t;
+
+}
+
+
+void pop(){
+    
+    struct node *t;
+    t=top;
+    
+    if(t==NULL){
+        printf("Linked Stack is empty\n");
+        exit(1);
+    }
+    else{
+        top=top->next;
+        printf("Poped element is %d.",t->data);
+        free(t);  /*Delete the top element*/
+        t=NULL;
+    }
+    
+}
+
+
+void dis(){
+    
+    struct node *t;
+    printf("\n");
+    
+    if(top==NULL){
+        printf("Linked Stack is Empty.\n");
+    }
+    else{ 
+        t=top;
+        while(t->next!=NULL){
+            printf("%d\n",t->data);
+            t=t->next;
+        }
+        printf("%d\n",t->data);
+    }
+    
+}
