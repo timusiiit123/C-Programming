@@ -1,0 +1,129 @@
+#include<stdio.h>
+#include<stdlib.h>
+/*structure define*/
+struct node
+{ int data;
+  struct node *l, *r;
+}*root;
+
+int x;
+/*Function Define*/
+struct node *create();
+void ins();
+/*Display of Preorder*/
+void pre(struct node *root)
+{ if(root!=NULL)
+    { printf("%d\t",root->data);
+      pre(root->l);
+      pre(root->r);
+    }
+}
+/*Display of Inorder*/
+void in(struct node *root)
+{ if(root!=NULL)
+    { in(root->l);
+      printf("%d\t",root->data);
+      in(root->r);     
+    }
+}
+/*Display of Postorder*/
+void post(struct node *root)
+{ if(root!=NULL)
+    { post(root->l);
+      post(root->r);
+      printf("%d\t",root->data);
+    }
+}
+
+void main()
+{ int n,h;
+  do
+  {
+  printf("\n\t\t***********BINARY SEARCH TREE************\n");
+  printf("1 for insert a data\n");
+  scanf("%d",&n); /*We are taking value as numerical not character*/
+  switch(n)
+        { case 1 : ins();
+                   break;
+          default: printf("Try AGAIN\n\n");
+                   exit(1);
+        }
+   printf("\n1 ->Continue\n");
+   scanf("%d",&h);
+   if(h==1)
+     { continue ;
+     }
+   else
+     { printf("\nEnter 1 for continue\n\n");
+       exit(1);
+     }
+   }while(h==1);
+}
+/*Node creation*/
+struct node *create()
+{ struct node *p;
+  p=(struct node*)malloc(sizeof(struct node));
+  printf("Enter the no. : ");
+  scanf("%d",&x); /*We are taking value as numerical not character*/
+  p->l=NULL;
+  p->data=x;
+  p->r=NULL;
+  return p;
+}
+/*Insert a data*/
+void ins()
+{ struct node *t, *q;
+  int f;
+  if(root==NULL) 
+    { t=create(); 
+      root=t;
+      printf("PREORDER  : ");
+      pre(root);
+      printf("\nINORDER   : ");
+      in(root);
+      printf("\nPOSTORDER : ");
+      post(root);   
+    }
+  else             
+    { t=root;
+      q=create();
+      loop1 : if((t->data) > (q->data)) 
+                { while(t->l!=NULL)
+                       { t=t->l;
+                         if((t->data) > (q->data))
+                           { continue ;
+                           }
+                         else
+                           { goto loop2;
+                             break;
+                           }
+                       }
+                  t->l=q;
+                  printf("PREORDER  : ");
+                  pre(root);
+                  printf("\nINORDER   : ");
+                  in(root);
+                  printf("\nPOSTORDER : ");
+                  post(root);
+                }
+      loop2 : if((t->data) <= (q->data)) 
+                { while(t->r!=NULL)
+                       { t=t->r;
+                         if((t->data) < (q->data))
+                           { continue ;
+                           }
+                         else
+                           { goto loop1;
+                             break;
+                           }
+                       }
+                  t->r=q;
+                  printf("PREORDER  : ");
+                  pre(root);
+                  printf("\nINORDER   : ");
+                  in(root);
+                  printf("\nPOSTORDER : ");
+                  post(root);
+                }   
+    }
+}
