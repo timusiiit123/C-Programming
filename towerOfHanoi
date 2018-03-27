@@ -3,29 +3,32 @@
 
 void towers(int,char,char,char);
 
-void main()
-{ int n;
+void main(){ 
+
+  int n;
   printf("\nenter no: ");
   scanf("%d",&n);  
-  if(n>0)
-    { printf("\n  The solution is follows\n");
-      towers(n,'A','B','C');
-    }
-  else
-    { printf("Enter greater than zero.\n");
-      exit(1);
-    }
+  if(n>0){ 
+    printf("\n  The solution is following-\n");
+    towers(n,'A','B','C');
+  }
+  else{ 
+    printf("Enter greater than zero.\n");
+    exit(1);
+  }
+  
 }
 
-void towers(int a,char front,char aux,char top)
-{ if(a==1)
-    { printf("Move Disc 1 from %c peg to %c peg\n",front,top);
-      return ;
-    }
-  else
-    { towers(a-1,front,top,aux);
-      printf("Move Disc %d from peg %c to peg %c\n ",a,front,top);
-      towers(a-1,aux,front,top);
-    }
+void towers(int a,char front,char aux,char top){ 
+  if(a==1){ 
+    printf("Move Disc 1 from %c peg to %c peg\n",front,top);
+    return ;
+  }
+  else{
+    towers(a-1,front,top,aux);
+    printf("Move Disc %d from peg %c to peg %c\n ",a,front,top);
+    towers(a-1,aux,front,top);
+  }
   printf("\n\n");
+
 }
