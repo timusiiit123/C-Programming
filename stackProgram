@@ -1,0 +1,138 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int stk[100];
+int top,N;
+/*Function define*/
+void pushElement();
+void popElement();
+void peepElement();
+void changeElement();
+void display();
+
+void main(){
+    
+    top=-1;
+    int choice, option=1;
+    printf("Size of stack : ");
+    scanf("%d",&N);  
+    if(N>0){
+        do{
+            printf("\nMenu\n");
+            printf("1-->PUSH\n");
+            printf("2-->POP\n");
+            printf("3-->PEEP\n");
+            printf("4-->CHANGE\n");
+            
+            printf("Enter your choice : ");
+            scanf("%d",&choice);  
+            
+            switch(choice){
+                case 1 :    pushElement();
+                            break;
+                            
+                case 2 :    popElement();
+                            break;
+                            
+                case 3 :    peepElement();
+                            break;
+                            
+                case 4 :    changeElement();
+                            break;
+                            
+                default:    printf("Invalid option. Please try Again\n"); 
+            }
+            
+            display();
+            
+            printf("\n1->Continue\n");
+            scanf("%d",&option);
+            
+            if(option==1){
+                continue ;
+            }
+            else{
+                printf("\nInvalid Option\n");
+                exit(1);
+            }
+        }while(option==1);
+    }
+    else{ 
+        printf("\nInvalid Option\n");
+        exit(1);
+    }
+    
+}
+
+
+void pushElement(){
+    
+    int x;
+    if(top==N-1){
+        printf("Stack is FULL\n");  
+    }
+    else{
+        printf("Enter no. :  ");
+        scanf("%d",&x);
+        top++;
+        stk[top]=x;
+    }
+    
+}
+
+
+void popElement(){
+    
+    int y;
+    if(top==-1){
+        printf("Stack is EMPTY\n");  
+    }
+    else{
+        y=stk[top];          
+        printf("Poped element is : %d",y);
+        top--;
+    }
+    
+}
+
+
+void peepElement(){
+    
+    int loc;
+    printf("Position of Element: ");
+    scanf("%d",&loc); 
+    if(top-loc+1>=0){
+        printf("Element at %d position = %d",loc,stk[top-loc+1]);
+    }
+    else{
+        printf("No item at your selected position\n");
+        exit(1);
+    }
+    
+}
+
+
+void changeElement(){
+    
+    int loc,x1;
+    printf("Position of element: ");
+    scanf("%d",&loc);     
+    if(top-loc+1>=0){
+        printf("New Element Value: ");
+        scanf("%d",&x1);
+        stk[top-loc+1]=x1;  /*change the element*/
+    }
+    else{
+        printf("No item at your selected position\n");
+        exit(1);
+    }
+    
+}
+
+void display(){
+    int i;
+    printf("---Elements of stack---\n");
+    for(i=top;i>=0;i--){
+        printf("%d\n",stk[i]);
+    }
+}
