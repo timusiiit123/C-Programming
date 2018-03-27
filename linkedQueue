@@ -1,0 +1,111 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{ 
+    int data;
+    struct node *next;
+}*F, *R;
+
+int x;
+
+struct node *create();
+void enq();
+void deq();
+void dis();
+
+void main(){ 
+    int n,h;
+    do{
+        printf("\n");
+        printf("---Linked Queue---\n1: ENQUEUE\n2: DEQUEUE\nEnter Choice: ");
+        scanf("%d",&n);  
+        
+        switch(n){
+            case 1:     enq();
+                        break;
+                        
+            case 2:     deq();
+                        break;
+                        
+            default:    printf("Try Again\n");
+                        exit(1);
+        }
+        dis();
+        
+        printf("\nPress 1 for continue: ");
+        scanf("%d",&h);  
+        
+        if(h==1){ 
+            continue ;
+        }
+        else{ 
+            printf("\nEnter 1 fo continuing\n");
+        exit(1);
+        }
+  
+    }while(h==1);
+
+}
+
+/*Node Creation*/
+struct node *create()
+{ struct node *p;
+  p=(struct node*)malloc(sizeof(struct node));
+  printf("Enter Number : ");
+  scanf("%d",&x); 
+  p->data=x;
+  p->next=NULL;
+  return p;
+}
+
+/*Insert the element in Queue*/
+void enq(){
+    
+    struct node *t;
+    if(F==NULL){
+        t=create();
+        R=t;
+        F=R;
+    }
+    else{
+        t=create();
+        R->next=t;
+        R=t;
+    }
+    
+}
+
+void deq(){
+    
+    struct node *t;
+    t=F;
+    
+    if(t==NULL){
+        printf("Linked Queue is empty\n");
+        exit(1);
+    }
+    else{
+        F=t->next;
+        printf("Deleted element is %d.\n",t->data);
+        free(t);
+        t=NULL;
+    }
+    
+}
+
+void dis(){
+    
+    struct node *t;
+    if(F==NULL){
+        printf("Linked Queue is Empty.\n");
+        exit(1);
+    }
+    else{
+        t=F;
+        while(t!=NULL){
+                printf("%d\t",t->data);
+                t=t->next;
+        }
+    }
+
+}
